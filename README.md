@@ -1,2 +1,4 @@
-# JavaScript-Pojects
-Alguns projetos feitos em JavaScript para melhor compreensão da linguagem.
+# JavaScript-Projects
+Este repositório conterá alguns projetos em JavaScript que realizei para treinar a linguagem e entendê-la melhor.  
+
+  
