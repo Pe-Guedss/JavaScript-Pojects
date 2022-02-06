@@ -10,7 +10,8 @@ const pokeTypeTwo = document.querySelector(".poke-type-two")
 const pokeWeight = document.querySelector(".poke-weight");
 const pokeHeight = document.querySelector(".poke-height");
 
-console.log(pokeName);
+const pokeList = document.querySelectorAll(".list-item");
+
 
 // Constants and Variables
 const TYPES = [
@@ -62,4 +63,27 @@ fetch ("https://pokeapi.co/api/v2/pokemon/3")
 
         pokeFrontImage.src = data["sprites"]["front_default"] || "";
         pokeBackImage.src = data["sprites"]["back_default"] || "";
+    });
+
+fetch ("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20")
+    .then (res => res.json())
+    .then (data => {
+        const pokemons = data ["results"];
+
+        for (let index = 0; index < 20; index++) {
+            const pokeListItem = pokeList[index];
+
+            if (pokemons[index]) {
+                const pokemon = pokemons[index];
+                pokeUrlSplited = pokemon["url"].split("/");
+
+                currentPokeId = pokeUrlSplited[pokeUrlSplited.length - 2];
+                currentPokeName = capitalize(pokemon["name"]);
+
+                pokeListItem.textContent = `#${currentPokeId.toString().padStart(3, "0")} ${currentPokeName}`;
+
+            } else {
+                pokeListItem.textContent = "";
+            }
+        }
     });
