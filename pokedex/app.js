@@ -11,6 +11,8 @@ const pokeWeight = document.querySelector(".poke-weight");
 const pokeHeight = document.querySelector(".poke-height");
 
 const pokeList = document.querySelectorAll(".list-item");
+const prevButton = document.querySelector(".left-button");
+const nextButton = document.querySelector(".right-button");
 
 
 // Constants and Variables
@@ -21,6 +23,9 @@ const TYPES = [
     "electric", "psychic", "ice", "dragon",
     "dark", "fairy"
 ];
+
+var prevUrl = null;
+var nextUrl = null;
 
 // Functions
 const capitalize = (str) => {
@@ -34,8 +39,8 @@ const resetScreen = () => {
     }
 };
 
-
-fetch ("https://pokeapi.co/api/v2/pokemon/3")
+const fetchPokeData = (id) => {
+    fetch (`https://pokeapi.co/api/v2/pokemon/${id}`)
     .then(res => res.json())
     .then(data => {
         resetScreen();
@@ -48,6 +53,7 @@ fetch ("https://pokeapi.co/api/v2/pokemon/3")
 
         if (secondType) {
             pokeTypeTwo.style.display = "block";
+            pokeTypeOne.style.margin = "0px 0px 10px 0px";
             pokeTypeTwo.textContent = capitalize(secondType["type"]["name"]);
         } else {
             pokeTypeOne.style.margin = "25px 0px 0px 0px";
@@ -64,11 +70,15 @@ fetch ("https://pokeapi.co/api/v2/pokemon/3")
         pokeFrontImage.src = data["sprites"]["front_default"] || "";
         pokeBackImage.src = data["sprites"]["back_default"] || "";
     });
+};
 
-fetch ("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20")
+const fetchPokeList = (currentUrl) => {
+    fetch (currentUrl)
     .then (res => res.json())
     .then (data => {
         const pokemons = data ["results"];
+        prevUrl = data ["previous"];
+        nextUrl = data ["next"];
 
         for (let index = 0; index < 20; index++) {
             const pokeListItem = pokeList[index];
@@ -87,3 +97,59 @@ fetch ("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20")
             }
         }
     });
+};
+
+const handleNextButtonClick = () => {
+    if (nextUrl) {
+        fetchPokeList(nextUrl);
+    }
+};
+
+const handlePrevButtonClick = () => {
+    if (prevUrl) {
+        fetchPokeList(prevUrl);
+    }
+};
+
+const removeIdPadStart = (id) => {
+    let count = 0;
+    let idTreated = "";
+    for (const char of id) {
+        if ( count < 3 && (char == "#" || char == "0") ) {
+            count++;
+            continue;
+        } else {
+            count = 3;
+        }
+        idTreated += char;
+    }
+
+    return idTreated;
+};
+
+const handlePokeClick = (e) => {
+    const pokemon = e.target;
+
+    if (!e.target) {
+        return;
+    }
+    if (!pokemon.textContent) {
+        return;
+    }
+
+    let pokeId = removeIdPadStart(pokemon.textContent.split(" ")[0]);
+    
+    fetchPokeData(pokeId);
+};
+
+
+// Event Listeners
+prevButton.addEventListener("click", handlePrevButtonClick);
+nextButton.addEventListener("click", handleNextButtonClick);
+
+for (const pokeListItem of pokeList) {
+    pokeListItem.addEventListener("click", handlePokeClick);
+}
+
+// Initializing the App Variables
+fetchPokeList ("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20")
