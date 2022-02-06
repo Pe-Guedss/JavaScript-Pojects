@@ -22,6 +22,10 @@ const TYPES = [
 ];
 
 // Functions
+const capitalize = (str) => {
+    return str[0].toUpperCase() + str.substr(1);
+};
+
 const resetScreen = () => {
     mainScreen.classList.remove("hide");
     for (const type of TYPES) {
@@ -30,22 +34,20 @@ const resetScreen = () => {
 };
 
 
-fetch ("https://pokeapi.co/api/v2/pokemon/4")
+fetch ("https://pokeapi.co/api/v2/pokemon/3")
     .then(res => res.json())
     .then(data => {
-        console.log(data);
-
         resetScreen();
 
         const pokeTypes = data["types"];
         const firstType = pokeTypes[0];
         const secondType = pokeTypes[1];
 
-        pokeTypeOne.textContent = firstType["type"]["name"];
+        pokeTypeOne.textContent = capitalize(firstType["type"]["name"]);
 
         if (secondType) {
             pokeTypeTwo.style.display = "block";
-            pokeTypeTwo.textContent = secondType["type"]["name"];
+            pokeTypeTwo.textContent = capitalize(secondType["type"]["name"]);
         } else {
             pokeTypeOne.style.margin = "25px 0px 0px 0px";
             pokeTypeTwo.style.display = "none";
@@ -53,10 +55,10 @@ fetch ("https://pokeapi.co/api/v2/pokemon/4")
 
         mainScreen.classList.add(firstType["type"]["name"]);
 
-        pokeName.textContent = data["name"];
-        pokeId.textContent = data["id"];
-        pokeWeight.textContent = data["weight"];
-        pokeHeight.textContent = data["height"];
+        pokeName.textContent = capitalize(data["name"]);
+        pokeId.textContent = "#" + data["id"].toString().padStart(3, "0");
+        pokeWeight.textContent = data["weight"]/10 + " kg";
+        pokeHeight.textContent = data["height"]/10 + " m";
 
         pokeFrontImage.src = data["sprites"]["front_default"] || "";
         pokeBackImage.src = data["sprites"]["back_default"] || "";
