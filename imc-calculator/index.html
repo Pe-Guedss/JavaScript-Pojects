@@ -60,12 +60,16 @@
                 Calcule seu IMC!
             </h2>
 
-            <form onsubmit="calculate(event)">
+            <span id="result">
+                
+            </span>
+
+            <form onsubmit="return calculate(event)">
                 <label for="height">Informe sua altura:</label>
-                <input type="number" name="height" id="height" placeholder="65.2"> <br><br>
+                <input type="float" name="height" id="height" placeholder="1.63"> <br><br>
 
                 <label for="weight">Informe seu peso:</label>
-                <input type="number" name="weight" id="weight" placeholder="1.63"> <br><br>
+                <input type="float" name="weight" id="weight" placeholder="102.63"> <br><br>
 
                 <input type="submit" value="Calcule!">
             </form>
