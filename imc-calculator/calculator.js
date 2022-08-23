@@ -4,7 +4,7 @@ function calculate(ev) {
     let weight = document.getElementById("weight").value;
     let result = document.getElementById("result");
 
-    let imc = weight*1.0/(height^2);
+    let imc = (weight/(height^2)).toFixed(2);
 
     result.innerHTML = `Seu IMC é: ${imc}. Observe a seção das categorias acima!`;
 
