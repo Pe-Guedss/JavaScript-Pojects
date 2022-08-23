@@ -1,5 +1,10 @@
 function calculate(ev) {
     ev.preventDefault();
+
+    for (const spanEl of document.getElementById("imc-categories").getElementsByTagName("span")) {
+        spanEl.style.color = "";
+    }
+
     let height = document.getElementById("height").value;
     let weight = document.getElementById("weight").value;
     let result = document.getElementById("result");
