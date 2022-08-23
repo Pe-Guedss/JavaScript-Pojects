@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IMC Calculator</title>
+
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async
+                src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+    </head>
+
+    <body>
+        <h1>
+            Bem vinde à calculadora de IMC!
+        </h1>
+
+        <div id="how-to-calculate">
+            <h2>
+                Como o IMC é calculado?
+            </h2>
+            <p>
+                O IMC segue à fórmula:
+                <br>
+                <span>
+                    \[IMC = {massa \over altura^2}\]
+                </span>
+                <br>
+                O resultado do IMC é dividido entre as categorias:
+                <br>
+                <div id="imc-categories">
+                    <span>
+                        <b>Muito abaixo</b> - IMC < 17
+                    </span>
+                    <br>
+                    <span>
+                        <b>Abaixo</b> - 17 < IMC < 18,5
+                    </span>
+                    <br>
+                    <span>
+                        <b>Ideal</b> - 18,5 < IMC < 25
+                    </span>
+                    <br>
+                    <span>
+                        <b>Sobrepeso</b> - 25 < IMC < 30
+                    </span>
+                    <br>
+                    <span>
+                        <b>Obesidade Mórbida</b> - IMC > 30
+                    </span>
+                </div>
+            </p>
+        </div>
+
+        <div id="calculate-yours">
+            <h2>
+                Calcule seu IMC!
+            </h2>
+
+            <form onsubmit="calculate()">
+                <label for="height">Informe sua altura:</label>
+                <input type="number" name="height" id="height" placeholder="65.2"> <br><br>
+
+                <label for="weight">Informe seu peso:</label>
+                <input type="number" name="weight" id="weight" placeholder="1.63"> <br><br>
+
+                <input type="submit" value="Calcule!">
+            </form>
+        </div>
+
+        <script src="calculator.js"></script>
+    </body>
+</html>
